@@ -1,6 +1,7 @@
 package bbw.project;
 
-
+import java.util.*;
+import java.io.*;
 //it will be board
 public class Simulation {
 
@@ -16,8 +17,33 @@ public class Simulation {
         this.board= new int [width][height];  // initialize the board where to display cells as 2 dimensional array
     }
 
+    public Simulation(){}
 
+    public ArrayList <String> getCordinates(){
 
+        ArrayList<String> coordinate= new ArrayList<>();
+
+            File file = new File("/Users/lobsang/documents/coordinate.txt");
+
+            try {
+                BufferedReader in = new BufferedReader(new FileReader(file));
+                String s;
+                s = in.readLine();
+                while (s != null) {
+                    coordinate.add(s);
+                    s = in.readLine();
+                }
+                in.close();
+
+            } catch (FileNotFoundException e1) {
+                System.err.println("File not found: " + file);
+
+            } catch (IOException e2) {
+                e2.printStackTrace();
+            }
+
+        return (coordinate);
+    }
 
 
 
@@ -120,11 +146,11 @@ public class Simulation {
 
   public static void main(String [] args){
 
-
+        Simulation sim1=new Simulation();
         Simulation simulation= new Simulation(8,5);
-        simulation.setAlive(2, 2);
-        simulation.setAlive(3, 2);
-        simulation.setAlive(4, 2);
+        simulation.setAlive(Integer.parseInt(sim1.getCordinates().get(0)), Integer.parseInt(sim1.getCordinates().get(1)));
+        simulation.setAlive(Integer.parseInt(sim1.getCordinates().get(2)), Integer.parseInt(sim1.getCordinates().get(3)));
+        simulation.setAlive(Integer.parseInt(sim1.getCordinates().get(4)), Integer.parseInt(sim1.getCordinates().get(5)));
         simulation.printBoard();
         simulation.step();
         simulation.printBoard();
